@@ -21,6 +21,7 @@ chor_ef = [pygame.image.load('chors_ef/pixil-frame-0.png'),
            pygame.image.load('chors_ef/pixil-frame-3.png'),
            pygame.image.load('chors_ef/pixil-frame-4.png'),
            ]
+fon = pygame.image.load('fon.png')
 
 
 def cv2ImageToSurface(cv2Image):
@@ -72,6 +73,22 @@ def draw_mouse():
 gifFrameList = loadGIF(r"pix.gif")
 currentFrame = 0
 
+
+def scene1():
+    global currentFrame
+    running = True
+    while running:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                running = False
+
+            elif e.type == pygame.KEYDOWN and e.key == pygame.K_q:
+                running = False
+
+        window.blit(fon, (-300, -20))
+        pygame.display.flip()
+
+
 run = True
 while run:
     draw_mouse()
@@ -79,6 +96,8 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+            scene1()
         if event.type == pygame.MOUSEBUTTONDOWN:
             mopos = pygame.mouse.get_pos()
             if mopos >= (250, 0):
@@ -216,7 +235,6 @@ while run:
                                     )
                                 )
 
-
                         def kuromi():
                             global count
                             run = True
@@ -225,9 +243,6 @@ while run:
                                 window.blit(flower, (0, 250))
                                 window.blit(flower2, (440, 250))
                                 window.blit(kur[count], (240, 260))
-                                for coin in coin_list:
-                                    window.blit(coin.surf, coin.rect)
-                                window.blit(player.surf, player.rect)
                                 DrawText("you have " + str(f'{coins:.2f}') + " flower coins", black, light_blue, 150,
                                          50,
                                          20)
@@ -236,6 +251,9 @@ while run:
                                          50,
                                          20)
                                 DrawText("buy auto miner " + str(cost2), black, light_blue, 120, 390, 20)
+                                for coin in coin_list:
+                                    window.blit(coin.surf, coin.rect)
+                                window.blit(player.surf, player.rect)
                                 pygame.display.update()
                                 if count == 8:
                                     count = 0
@@ -253,9 +271,6 @@ while run:
                                 window.blit(flower, (0, 250))
                                 window.blit(flower2, (440, 250))
                                 window.blit(kity[count], (240, 260))
-                                for coin in coin_list:
-                                    window.blit(coin.surf, coin.rect)
-                                window.blit(player.surf, player.rect)
                                 DrawText("you have " + str(f'{coins:.2f}') + " flower coins", black, light_blue, 150,
                                          50,
                                          20)
@@ -264,6 +279,9 @@ while run:
                                          50,
                                          20)
                                 DrawText("buy auto miner " + str(cost2), black, light_blue, 120, 390, 20)
+                                for coin in coin_list:
+                                    window.blit(coin.surf, coin.rect)
+                                window.blit(player.surf, player.rect)
                                 pygame.display.update()
                                 if count == 8:
                                     count = 0
@@ -281,9 +299,6 @@ while run:
                                 window.blit(flower, (0, 250))
                                 window.blit(flower2, (440, 250))
                                 window.blit(melody[count], (240, 260))
-                                for coin in coin_list:
-                                    window.blit(coin.surf, coin.rect)
-                                window.blit(player.surf, player.rect)
                                 DrawText("you have " + str(f'{coins:.2f}') + " flower coins", black, light_blue, 150,
                                          50,
                                          20)
@@ -292,6 +307,9 @@ while run:
                                          50,
                                          20)
                                 DrawText("buy auto miner " + str(cost2), black, light_blue, 120, 390, 20)
+                                for coin in coin_list:
+                                    window.blit(coin.surf, coin.rect)
+                                window.blit(player.surf, player.rect)
                                 pygame.display.update()
                                 if count == 8:
                                     count = 0
@@ -309,9 +327,6 @@ while run:
                                 window.blit(flower, (0, 250))
                                 window.blit(flower2, (440, 250))
                                 window.blit(kero[count], (240, 260))
-                                for coin in coin_list:
-                                    window.blit(coin.surf, coin.rect)
-                                window.blit(player.surf, player.rect)
                                 DrawText("you have " + str(f'{coins:.2f}') + " flower coins", black, light_blue, 150,
                                          50,
                                          20)
@@ -320,6 +335,9 @@ while run:
                                          50,
                                          20)
                                 DrawText("buy auto miner " + str(cost2), black, light_blue, 120, 390, 20)
+                                for coin in coin_list:
+                                    window.blit(coin.surf, coin.rect)
+                                window.blit(player.surf, player.rect)
                                 pygame.display.update()
                                 if count == 8:
                                     count = 0
@@ -357,6 +375,26 @@ while run:
                                 pygame.display.update()
                                 clock.tick(35)
 
+                        def ending():
+                            global autog
+                            global coins
+                            global lvl
+                            run = True
+                            while run:
+                                for e in pygame.event.get():
+                                    if e.type == pygame.QUIT:
+                                        run = False
+
+                                    elif e.type == pygame.KEYDOWN and e.key == pygame.K_q:
+                                        run = False
+                                        autog = 0
+                                        coins = 0
+                                        lvl = 1
+                                        main_loop()
+
+                                window.blit(fon, (-300, -20))
+                                pygame.display.flip()
+
                         coin_countdown = 2500
                         coin_interval = 100
                         WIDTH = 650
@@ -366,8 +404,9 @@ while run:
                         global coins
                         game_running = True
                         while game_running:
-                            if game_running:
-                                autominer()
+                            for event in pygame.event.get():
+                                if event.type == pygame.QUIT:
+                                    game_running = False
                                 pygame.mouse.set_visible(False)
                                 clock = pygame.time.Clock()
                                 ADDCOIN = pygame.USEREVENT + 1
@@ -379,11 +418,9 @@ while run:
 
                                 running = True
                                 while running:
-
                                     for event in pygame.event.get():
                                         if event.type == pygame.QUIT:
                                             running = False
-
                                         if event.type == pygame.MOUSEBUTTONDOWN:
                                             mopos = pygame.mouse.get_pos()
                                             if mopos >= (260, 0):
@@ -438,6 +475,8 @@ while run:
 
                                             pygame.time.set_timer(ADDCOIN, coin_countdown)
 
+                                    pygame.display.update()
+                                    clock.tick(20)
                                     player.update(pygame.mouse.get_pos())
 
                                     coins_collected = pygame.sprite.spritecollide(
@@ -448,6 +487,7 @@ while run:
 
                                     if len(coin_list) >= COIN_COUNT:
                                         running = False
+                                        ending()
                                     window.blit(fon, (-300, -20))
                                     window.blit(flower, (0, 250))
                                     window.blit(flower2, (440, 250))
@@ -461,21 +501,17 @@ while run:
                                              50,
                                              20)
                                     DrawText("buy auto miner " + str(cost2), black, light_blue, 120, 390, 20)
+                                    window.blit(pers[count], (240, 260))
                                     for coin in coin_list:
                                         window.blit(coin.surf, coin.rect)
-                                    window.blit(pers[count], (240, 260))
                                     window.blit(player.surf, player.rect)
                                     pygame.display.flip()
 
                                     clock.tick(30)
 
                                 print(f"Game over! Final score: {coins}")
-
+                                game_running = False
                                 pygame.mouse.set_visible(True)
-                                pygame.quit()
-                            for event in pygame.event.get():
-                                if event.type == pygame.QUIT:
-                                    game_running = False
 
                             DrawText("you have " + str(f'{coins:.2f}') + " flower coins", black, light_blue, 150, 50,
                                      20)
